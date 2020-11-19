@@ -7,19 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04A4249725671A8700F42914 /* fruits in Resources */ = {isa = PBXBuildFile; fileRef = 04A4249625671A8700F42914 /* fruits */; };
 		04C82C682565D4DC00EC4CED /* MasterMindFruityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */; };
 		04C82C6A2565D4DC00EC4CED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C82C692565D4DC00EC4CED /* ContentView.swift */; };
 		04C82C6C2565D4DD00EC4CED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C82C6B2565D4DD00EC4CED /* Assets.xcassets */; };
 		04C82C6F2565D4DD00EC4CED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C82C6E2565D4DD00EC4CED /* Preview Assets.xcassets */; };
+		04C82C782565D51300EC4CED /* Juicy Fruity.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04C82C772565D51300EC4CED /* Juicy Fruity.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04A4249625671A8700F42914 /* fruits */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fruits; sourceTree = "<group>"; };
 		04C82C642565D4DC00EC4CED /* MasterMindFruity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterMindFruity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterMindFruityApp.swift; sourceTree = "<group>"; };
 		04C82C692565D4DC00EC4CED /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		04C82C6B2565D4DD00EC4CED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04C82C6E2565D4DD00EC4CED /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		04C82C702565D4DD00EC4CED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04C82C772565D51300EC4CED /* Juicy Fruity.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Juicy Fruity.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			children = (
 				04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */,
 				04C82C692565D4DC00EC4CED /* ContentView.swift */,
+				04A4249625671A8700F42914 /* fruits */,
+				04C82C772565D51300EC4CED /* Juicy Fruity.otf */,
 				04C82C6B2565D4DD00EC4CED /* Assets.xcassets */,
 				04C82C702565D4DD00EC4CED /* Info.plist */,
 				04C82C6D2565D4DD00EC4CED /* Preview Content */,
@@ -128,6 +134,8 @@
 			files = (
 				04C82C6F2565D4DD00EC4CED /* Preview Assets.xcassets in Resources */,
 				04C82C6C2565D4DD00EC4CED /* Assets.xcassets in Resources */,
+				04C82C782565D51300EC4CED /* Juicy Fruity.otf in Resources */,
+				04A4249725671A8700F42914 /* fruits in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
