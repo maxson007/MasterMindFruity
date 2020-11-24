@@ -53,37 +53,76 @@ struct GameView : View{
     
     @State var game = Game()
     @State var basket = [
-        Fruit(name: "citron-jaune", identifier: 1, isSelected: false ),
-        Fruit(name: "fraise", identifier: 2,isSelected: false),
-        Fruit(name: "orange", identifier: 3, isSelected: false),
-        Fruit(name: "poire", identifier: 3, isSelected: false),
-        Fruit(name: "pomme-rouge", identifier: 4, isSelected: false),
-        Fruit(name: "pomme-vert", identifier: 5,isSelected: false),
+        Fruit(id: 1, name: "citron-jaune", isSelected: false ),
+        Fruit(id: 2, name: "fraise",isSelected: false),
+        Fruit(id: 3, name: "orange", isSelected: false),
+        Fruit(id: 4, name: "poire", isSelected: false),
+        Fruit(id: 5, name: "pomme-rouge", isSelected: false),
+        Fruit(id: 6, name: "pomme-vert",isSelected: false),
     ]
     
     @State var userSelectedFruit:[Int]=[]
     @State var isWinner:Bool = false
+    @State var isActivateValidateButton: Bool = false
     var body: some View{
         
         VStack {
-            Spacer()
-            HStack {
+            List(game.history, id: \.self){ value in
                 
-                ForEach(basket, id: \.id) { fruit in
+                ForEach(value,id: \.self) { item in
+                    
+                    HStack {
+                        Image(basket[item].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
+                            .scaleEffect(x: -1, y: 1, anchor: .center)
+                    }
+                    
+                }
+                Divider()
+                
+                VStack {
+                    HStack {
+                        
+                        ForEach(game.resultPlaced, id: \.self) { result in
+                            Circle()
+                                .fill(Color.green)
+                                .frame(width: 30, height: 30)
+                        }
+                    }
+                    
+                    HStack {
+                        ForEach(0..<game.wrongPlace) { item in
+                            Circle()
+                                .fill(Color.red)
+                                .frame(width: 30, height: 30)
+                        }.padding()
+                    }
+                    
+                }
+                
+                
+            }.rotationEffect(.radians(.pi))
+            .scaleEffect(x: -1, y: 1, anchor: .center)
+            Spacer()
+            Divider()
+            HStack {
+                ForEach(self.basket, id: \.id) { fruit in
                     FruitView(fruit: fruit,  selectedFruits: $userSelectedFruit)
                 }
                 
             }.padding(10)
             
             Button(action: {
-                print(userSelectedFruit)
+                self.isActivateValidateButton=false
                 isWinner = game.checkValueEnteredByUser(userValue: userSelectedFruit)
+                userSelectedFruit.removeAll()
                 print(game.history)
-
+                self.clearButton()
+                
             }) {
                 Text("Valider !")
                     .font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title))
             }
+            .disabled(!activateValidateButton())
             .padding()
             .foregroundColor(.white)
             .background(Color(red: 0.69500756259999996, green: 0.85624021289999996, blue: 0.0083209406580000006, opacity: 1.0))
@@ -92,6 +131,15 @@ struct GameView : View{
         }.navigationBarBackButtonHidden(false).onAppear(
             perform: {self.game.generateSecret()}
         )
+    }
+    
+    private  func clearButton(){
+        for i in 0 ..< basket.count{
+            basket[i].isSelected=false
+        }
+    }
+    private func activateValidateButton() ->Bool{
+        return userSelectedFruit.count == game.level
     }
     
 }
@@ -105,45 +153,48 @@ struct FruitView : View {
         Image(fruit.name).resizable().aspectRatio(contentMode: .fit).opacity(fruit.isSelected ? 0.2: 1).onTapGesture {
             self.fruit.isSelected=true
             if(fruit.isSelected){
-                self.selectedFruits.append(self.fruit.identifier)
+                self.selectedFruits.append(self.fruit.id)
             }
-        }
+        }.disabled(selectedFruits.count>=4)
     }
 }
 
 
 struct Fruit: Identifiable {
-    var id = UUID()
+    var id : Int
     var name: String
-    var identifier:Int
     var isSelected: Bool
 }
 
-struct BasketFruits {
-    var fruits : [Fruit] = []
-    var selectedFruit: [Int] = []
-}
 
 struct Game {
-    var history : [Array<Int>] = []
+    var history : [[Int]] = []
     var secretCode : [Int] = []
     let numberOfFruits=6;
     let level=4;
     var wellPlaced: Int = 0; //bien place
     var wrongPlace: Int = 0; //mal place
+    var resultPlaced: [Int]=[]
     public mutating func generateSecret(){
         for _ in 1 ... level {
             self.secretCode.append(generateIdentifier())
         }
+        if !history.isEmpty{
+            history.removeAll()
+            
+        }
+        //history.append([1,2,3,5])
         print(secretCode)
     }
     public mutating func checkValueEnteredByUser(userValue: [Int]) -> Bool{
         history.append(userValue)
+        resultPlaced.removeAll()
         var secret = self.secretCode
         for i in 0 ... level-1
         {
             if(secret[i] == userValue[i] ){
                 self.wellPlaced+=1
+                resultPlaced.append(1)
                 secret[i] = -1
             }
         }
@@ -152,11 +203,13 @@ struct Game {
         {
             if(secret.contains(userValue[i]) ){
                 self.wrongPlace+=1
+                resultPlaced.append(0)
                 if let index = secret.firstIndex(of: userValue[i]) {
                     secret[index] = -1
                 }
             }
         }
+        resultPlaced.shuffle()
         secret.removeAll()
         return isSuccess()
     }
