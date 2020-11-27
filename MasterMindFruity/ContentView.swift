@@ -52,10 +52,12 @@ struct Home : View{
 struct GameView : View{
     
     @State var game = Game()
-
+    
     @ObservedObject var basket: FruitBasket = FruitBasket()
     
     @State var userSelectedFruit:[Int]=[]
+    @State var userSelectedFruitHistory:[[Image]]=[]
+
     @State var isWinner:Bool = false
     @State var isActivateValidateButton: Bool = false
     var body: some View{
@@ -63,7 +65,7 @@ struct GameView : View{
         VStack {
             List(game.history, id: \.self){ value in
                 
-                ForEach(value,id: \.self) { item in
+                ForEach(0..<value.count) { item in
                     
                     HStack {
                         Image(basket.fruits[item].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
@@ -74,21 +76,12 @@ struct GameView : View{
                 Divider()
                 
                 VStack {
-                    HStack {
-                        
-                        ForEach(game.resultPlaced, id: \.self) { result in
-                            Circle()
-                                .fill(Color.green)
-                                .frame(width: 30, height: 30)
-                        }
-                    }
                     
-                    HStack {
-                        ForEach(0..<game.wrongPlace) { item in
-                            Circle()
-                                .fill(Color.red)
-                                .frame(width: 30, height: 30)
-                        }.padding()
+                    ForEach(game.resultPlaced, id: \.self) { result in
+                        
+                        Circle()
+                            .fill(result)
+                            .frame(width: 30, height: 30)
                     }
                     
                 }
@@ -100,7 +93,10 @@ struct GameView : View{
             Divider()
             HStack {
                 ForEach(self.basket.fruits, id: \.id) { fruit in
-                    FruitView(fruit: fruit,  selectedFruits: $userSelectedFruit)
+                    FruitView(fruit: fruit,  selectedFruits: $userSelectedFruit).onTapGesture {
+                        userSelectedFruit.append(fruit.id)
+                        fruit.isSelected=true
+                    }
                 }
                 
             }.padding(10)
@@ -141,15 +137,9 @@ struct GameView : View{
 
 struct FruitView : View {
     @State var fruit: Fruit
-   // @State var isSelected: Bool = false
     @Binding var selectedFruits:[Int]
     var body: some View{
-        Image(fruit.name).resizable().aspectRatio(contentMode: .fit).opacity(fruit.isSelected ? 0.2: 1).onTapGesture {
-            self.fruit.isSelected=true
-            if(fruit.isSelected){
-                self.selectedFruits.append(self.fruit.id)
-            }
-        }.disabled(selectedFruits.count>=4)
+        Image(fruit.name).resizable().aspectRatio(contentMode: .fit).opacity(fruit.isSelected ? 0.2: 1)
     }
 }
 
@@ -168,7 +158,7 @@ class Fruit: Identifiable ,ObservableObject{
 
 class FruitBasket: ObservableObject{
     @Published var fruits: [Fruit]
-
+    
     init(){
         self.fruits = [
             Fruit(id: 1, name: "citron-jaune", isSelected: false ),
@@ -177,54 +167,57 @@ class FruitBasket: ObservableObject{
             Fruit(id: 4, name: "poire", isSelected: false),
             Fruit(id: 5, name: "pomme-rouge", isSelected: false),
             Fruit(id: 6, name: "pomme-vert",isSelected: false),
-            ]
+        ]
     }
-
+    
 }
 
-struct Game {
+class Game {
     var history : [[Int]] = []
     var secretCode : [Int] = []
     let numberOfFruits=6;
     let level=4;
     var wellPlaced: Int = 0; //bien place
     var wrongPlace: Int = 0; //mal place
-    var resultPlaced: [Int]=[]
-    public mutating func generateSecret(){
+    var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray]
+    var resultPlacedHistory:[[Color]]=[]
+    public func generateSecret(){
         for _ in 1 ... level {
             self.secretCode.append(generateIdentifier())
         }
         if !history.isEmpty{
             history.removeAll()
-            
         }
-        //history.append([1,2,3,5])
         print(secretCode)
     }
-    public mutating func checkValueEnteredByUser(userValue: [Int]) -> Bool{
+    
+    public func checkValueEnteredByUser(userValue: [Int]) -> Bool{
         history.append(userValue)
         resultPlaced.removeAll()
         var secret = self.secretCode
-        for i in 0 ... level-1
+        self.wellPlaced=0
+        self.wrongPlace=0
+        for i in 0 ..< level
         {
             if(secret[i] == userValue[i] ){
                 self.wellPlaced+=1
-                resultPlaced.append(1)
+                resultPlaced.append(Color.green)
                 secret[i] = -1
             }
         }
         
-        for i in 0 ... level-1
+        for i in 0 ..< level
         {
             if(secret.contains(userValue[i]) ){
                 self.wrongPlace+=1
-                resultPlaced.append(0)
+                resultPlaced.append(Color.red)
                 if let index = secret.firstIndex(of: userValue[i]) {
                     secret[index] = -1
                 }
             }
         }
         resultPlaced.shuffle()
+        resultPlacedHistory.append(resultPlaced)
         secret.removeAll()
         return isSuccess()
     }
