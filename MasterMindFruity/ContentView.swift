@@ -65,10 +65,10 @@ struct GameView : View{
             List{
                 ForEach(game.history) { value in
                     HStack{
-                        ForEach(0..<value.userSecretCode.count) { item in
+                        ForEach(value.userSecretCode.indices, id: \.self) { index in
                             
                             HStack {
-                                Image(basket.fruits[item].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
+                                Image(basket.fruits[index].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
                                     .scaleEffect(x: -1, y: 1, anchor: .center)
                             }
                             
@@ -77,12 +77,38 @@ struct GameView : View{
                         
                         VStack {
                             
-                            ForEach(value.resultPlaced, id: \.self) { result in
+                                HStack {
                                 
-                                Circle()
-                                    .fill(result)
-                                    .frame(width: 30, height: 30)
-                            }
+                                    Circle()
+                                        .fill(
+                                            value.resultPlaced.indices.contains(0) ?  value.resultPlaced[0]
+                                                : Color.gray
+                                        )
+                                        .frame(width: 30, height: 30)
+                                    
+                                    Circle()
+                                        .fill(                                            value.resultPlaced.indices.contains(1) ?  value.resultPlaced[1]
+                                                                                            : Color.gray)
+                                        .frame(width: 30, height: 30)
+                                    
+                                }
+                                
+                                
+                                HStack {
+                                    
+                                    Circle()
+                                        .fill(                 value.resultPlaced.indices.contains(2) ?  value.resultPlaced[2]
+                                                                                            : Color.gray)
+                                        .frame(width: 30, height: 30)
+                                    
+                                    
+                                    Circle()
+                                        .fill(                                            value.resultPlaced.indices.contains(3) ?  value.resultPlaced[3]
+                                                                                            : Color.gray)
+                                        .frame(width: 30, height: 30)
+                                    
+                                }
+                                
                             
                         }
                     }
