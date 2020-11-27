@@ -52,14 +52,8 @@ struct Home : View{
 struct GameView : View{
     
     @State var game = Game()
-    @State var basket = [
-        Fruit(id: 1, name: "citron-jaune", isSelected: false ),
-        Fruit(id: 2, name: "fraise",isSelected: false),
-        Fruit(id: 3, name: "orange", isSelected: false),
-        Fruit(id: 4, name: "poire", isSelected: false),
-        Fruit(id: 5, name: "pomme-rouge", isSelected: false),
-        Fruit(id: 6, name: "pomme-vert",isSelected: false),
-    ]
+
+    @ObservedObject var basket: FruitBasket = FruitBasket()
     
     @State var userSelectedFruit:[Int]=[]
     @State var isWinner:Bool = false
@@ -72,7 +66,7 @@ struct GameView : View{
                 ForEach(value,id: \.self) { item in
                     
                     HStack {
-                        Image(basket[item].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
+                        Image(basket.fruits[item].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
                             .scaleEffect(x: -1, y: 1, anchor: .center)
                     }
                     
@@ -105,7 +99,7 @@ struct GameView : View{
             Spacer()
             Divider()
             HStack {
-                ForEach(self.basket, id: \.id) { fruit in
+                ForEach(self.basket.fruits, id: \.id) { fruit in
                     FruitView(fruit: fruit,  selectedFruits: $userSelectedFruit)
                 }
                 
@@ -115,8 +109,8 @@ struct GameView : View{
                 self.isActivateValidateButton=false
                 isWinner = game.checkValueEnteredByUser(userValue: userSelectedFruit)
                 userSelectedFruit.removeAll()
+                clearButton()
                 print(game.history)
-                self.clearButton()
                 
             }) {
                 Text("Valider !")
@@ -134,8 +128,8 @@ struct GameView : View{
     }
     
     private  func clearButton(){
-        for i in 0 ..< basket.count{
-            basket[i].isSelected=false
+        for i in 0 ..< basket.fruits.count{
+            self.basket.fruits[i].isSelected=false
         }
     }
     private func activateValidateButton() ->Bool{
@@ -147,7 +141,7 @@ struct GameView : View{
 
 struct FruitView : View {
     @State var fruit: Fruit
-    @State var isSelected: Bool = false
+   // @State var isSelected: Bool = false
     @Binding var selectedFruits:[Int]
     var body: some View{
         Image(fruit.name).resizable().aspectRatio(contentMode: .fit).opacity(fruit.isSelected ? 0.2: 1).onTapGesture {
@@ -160,12 +154,33 @@ struct FruitView : View {
 }
 
 
-struct Fruit: Identifiable {
+class Fruit: Identifiable ,ObservableObject{
     var id : Int
     var name: String
-    var isSelected: Bool
+    @Published var isSelected: Bool
+    
+    init(id: Int ,name: String,isSelected: Bool){
+        self.id = id
+        self.name = name
+        self.isSelected = isSelected
+    }
 }
 
+class FruitBasket: ObservableObject{
+    @Published var fruits: [Fruit]
+
+    init(){
+        self.fruits = [
+            Fruit(id: 1, name: "citron-jaune", isSelected: false ),
+            Fruit(id: 2, name: "fraise",isSelected: false),
+            Fruit(id: 3, name: "orange", isSelected: false),
+            Fruit(id: 4, name: "poire", isSelected: false),
+            Fruit(id: 5, name: "pomme-rouge", isSelected: false),
+            Fruit(id: 6, name: "pomme-vert",isSelected: false),
+            ]
+    }
+
+}
 
 struct Game {
     var history : [[Int]] = []
