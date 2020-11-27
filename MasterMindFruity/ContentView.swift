@@ -56,7 +56,7 @@ struct GameView : View{
     @ObservedObject var basket: FruitBasket = FruitBasket()
     
     @State var userSelectedFruit:[Int]=[]
-    @State var userSelectedFruitHistory:[[Image]]=[]
+    @State var gameHiistory:[[Image]]=[]
 
     @State var isWinner:Bool = false
     @State var isActivateValidateButton: Bool = false
@@ -94,8 +94,11 @@ struct GameView : View{
             HStack {
                 ForEach(self.basket.fruits, id: \.id) { fruit in
                     FruitView(fruit: fruit,  selectedFruits: $userSelectedFruit).onTapGesture {
-                        userSelectedFruit.append(fruit.id)
-                        fruit.isSelected=true
+                        if userSelectedFruit.count<game.level{
+                            userSelectedFruit.append(fruit.id)
+                            fruit.isSelected=true
+                        }
+                    
                     }
                 }
                 
@@ -104,7 +107,7 @@ struct GameView : View{
             Button(action: {
                 self.isActivateValidateButton=false
                 isWinner = game.checkValueEnteredByUser(userValue: userSelectedFruit)
-                userSelectedFruit.removeAll()
+                
                 clearButton()
                 print(game.history)
                 
@@ -113,6 +116,7 @@ struct GameView : View{
                     .font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title))
             }
             .disabled(!activateValidateButton())
+            .opacity(activateValidateButton() ? 1 : 0.2)
             .padding()
             .foregroundColor(.white)
             .background(Color(red: 0.69500756259999996, green: 0.85624021289999996, blue: 0.0083209406580000006, opacity: 1.0))
@@ -127,6 +131,7 @@ struct GameView : View{
         for i in 0 ..< basket.fruits.count{
             self.basket.fruits[i].isSelected=false
         }
+        userSelectedFruit.removeAll()
     }
     private func activateValidateButton() ->Bool{
         return userSelectedFruit.count == game.level
@@ -229,6 +234,10 @@ class Game {
     private func generateIdentifier() -> Int{
         return (Int(arc4random()) % self.numberOfFruits)+1
     }
+}
+
+struct GameState{
+    let game : [Game]
 }
 
 struct ContentView_Previews: PreviewProvider {
