@@ -56,36 +56,37 @@ struct GameView : View{
     @ObservedObject var basket: FruitBasket = FruitBasket()
     
     @State var userSelectedFruit:[Int]=[]
-    @State var gameHiistory:[[Image]]=[]
-
+    
     @State var isWinner:Bool = false
     @State var isActivateValidateButton: Bool = false
     var body: some View{
         
         VStack {
-            List(game.history, id: \.self){ value in
-                
-                ForEach(0..<value.count) { item in
-                    
-                    HStack {
-                        Image(basket.fruits[item].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
-                            .scaleEffect(x: -1, y: 1, anchor: .center)
-                    }
-                    
-                }
-                Divider()
-                
-                VStack {
-                    
-                    ForEach(game.resultPlaced, id: \.self) { result in
+            List{
+                ForEach(game.history) { value in
+                    HStack{
+                        ForEach(0..<value.userSecretCode.count) { item in
+                            
+                            HStack {
+                                Image(basket.fruits[item].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
+                                    .scaleEffect(x: -1, y: 1, anchor: .center)
+                            }
+                            
+                        }
+                        Divider()
                         
-                        Circle()
-                            .fill(result)
-                            .frame(width: 30, height: 30)
+                        VStack {
+                            
+                            ForEach(value.resultPlaced, id: \.self) { result in
+                                
+                                Circle()
+                                    .fill(result)
+                                    .frame(width: 30, height: 30)
+                            }
+                            
+                        }
                     }
-                    
                 }
-                
                 
             }.rotationEffect(.radians(.pi))
             .scaleEffect(x: -1, y: 1, anchor: .center)
@@ -98,7 +99,7 @@ struct GameView : View{
                             userSelectedFruit.append(fruit.id)
                             fruit.isSelected=true
                         }
-                    
+                        
                     }
                 }
                 
@@ -178,14 +179,14 @@ class FruitBasket: ObservableObject{
 }
 
 class Game {
-    var history : [[Int]] = []
+    var history : [Result] = []
     var secretCode : [Int] = []
     let numberOfFruits=6;
     let level=4;
     var wellPlaced: Int = 0; //bien place
     var wrongPlace: Int = 0; //mal place
     var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray]
-    var resultPlacedHistory:[[Color]]=[]
+    var userSecretCode:[Int]=[]
     public func generateSecret(){
         for _ in 1 ... level {
             self.secretCode.append(generateIdentifier())
@@ -197,7 +198,7 @@ class Game {
     }
     
     public func checkValueEnteredByUser(userValue: [Int]) -> Bool{
-        history.append(userValue)
+        self.userSecretCode=userValue
         resultPlaced.removeAll()
         var secret = self.secretCode
         self.wellPlaced=0
@@ -222,8 +223,9 @@ class Game {
             }
         }
         resultPlaced.shuffle()
-        resultPlacedHistory.append(resultPlaced)
         secret.removeAll()
+        history.append(Result(resultPlaced: resultPlaced, userSecretCode: userValue))
+        
         return isSuccess()
     }
     
@@ -236,8 +238,16 @@ class Game {
     }
 }
 
-struct GameState{
-    let game : [Game]
+
+class Result: Identifiable{
+    var id = UUID()
+    var resultPlaced : [Color]
+    var userSecretCode: [Int]
+    
+    init(resultPlaced : [Color],userSecretCode: [Int]) {
+        self.resultPlaced=resultPlaced
+        self.userSecretCode=userSecretCode
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
