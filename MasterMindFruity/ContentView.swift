@@ -12,7 +12,7 @@ struct ContentView: View {
     @State var gameIsInProgress=false
     @State var bestScore=0
     var body: some View {
-        GameView()
+        Home()
     }
     
 }
