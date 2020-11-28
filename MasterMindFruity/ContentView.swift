@@ -56,9 +56,7 @@ struct GameView : View{
     @ObservedObject var basket: FruitBasket = FruitBasket()
     
     @State var userSelectedFruit:[Int]=[]
-    @State var counter:Int = 0
     @State var isWinner:Bool = false
-    @State var isActivateValidateButton: Bool = false
     var body: some View{
         
         VStack {
@@ -69,7 +67,6 @@ struct GameView : View{
                             .scaleEffect(x: -1, y: 1, anchor: .center)
                         Divider()
                         ForEach(value.userSecretCode, id: \.self) { idFruit in
-                            
                             HStack {
                                 Image(basket.fruits[idFruit-1].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
                                     .scaleEffect(x: -1, y: 1, anchor: .center)
@@ -77,41 +74,31 @@ struct GameView : View{
                             
                         }
                         Divider()
-                        
                         VStack {
-                            
                             HStack {
-                                
                                 Circle()
                                     .fill(
-                                        value.resultPlaced.indices.contains(0) ?  value.resultPlaced[0]
-                                            : Color.gray
+                                        value.resultPlaced.indices.contains(0) ?  value.resultPlaced[0] : Color.gray
                                     )
                                     .frame(width: 30, height: 30)
                                 
                                 Circle()
-                                    .fill(                                            value.resultPlaced.indices.contains(1) ?  value.resultPlaced[1]
-                                                                                        : Color.gray)
+                                    .fill(                                            value.resultPlaced.indices.contains(1) ?  value.resultPlaced[1] : Color.gray)
                                     .frame(width: 30, height: 30)
                                 
                             }
-                            
                             
                             HStack {
-                                
                                 Circle()
-                                    .fill(                 value.resultPlaced.indices.contains(2) ?  value.resultPlaced[2]
-                                                            : Color.gray)
+                                    .fill(                 value.resultPlaced.indices.contains(2) ?  value.resultPlaced[2] : Color.gray)
                                     .frame(width: 30, height: 30)
                                 
                                 
                                 Circle()
-                                    .fill(                                            value.resultPlaced.indices.contains(3) ?  value.resultPlaced[3]
-                                                                                        : Color.gray)
+                                    .fill(                                            value.resultPlaced.indices.contains(3) ?  value.resultPlaced[3] : Color.gray)
                                     .frame(width: 30, height: 30)
                                 
                             }
-                            
                             
                         }
                     }
@@ -137,12 +124,8 @@ struct GameView : View{
             }.padding(10)
             
             Button(action: {
-                self.isActivateValidateButton=false
                 isWinner = game.checkValueEnteredByUser(userValue: userSelectedFruit)
-                
                 clearButton()
-                print(game.history)
-                
             }) {
                 Text("Valider !")
                     .font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title))
