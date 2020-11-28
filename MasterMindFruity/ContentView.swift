@@ -56,7 +56,7 @@ struct GameView : View{
     @ObservedObject var basket: FruitBasket = FruitBasket()
     
     @State var userSelectedFruit:[Int]=[]
-    
+    @State var counter:Int = 0
     @State var isWinner:Bool = false
     @State var isActivateValidateButton: Bool = false
     var body: some View{
@@ -65,10 +65,13 @@ struct GameView : View{
             List{
                 ForEach(game.history) { value in
                     HStack{
-                        ForEach(value.userSecretCode.indices, id: \.self) { index in
+                        Text("\(value.id)").foregroundColor(Color.blue).multilineTextAlignment(.center).font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title)).rotationEffect(.radians(.pi))
+                            .scaleEffect(x: -1, y: 1, anchor: .center)
+                        Divider()
+                        ForEach(value.userSecretCode, id: \.self) { idFruit in
                             
                             HStack {
-                                Image(basket.fruits[index].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
+                                Image(basket.fruits[idFruit-1].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
                                     .scaleEffect(x: -1, y: 1, anchor: .center)
                             }
                             
@@ -204,13 +207,14 @@ class FruitBasket: ObservableObject{
     
 }
 
-class Game {
-    var history : [Result] = []
+class Game: ObservableObject {
+    @Published var history : [Result] = []
     var secretCode : [Int] = []
     let numberOfFruits=6;
     let level=4;
     var wellPlaced: Int = 0; //bien place
     var wrongPlace: Int = 0; //mal place
+    var counter : Int = 0
     var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray]
     var userSecretCode:[Int]=[]
     public func generateSecret(){
@@ -225,6 +229,7 @@ class Game {
     
     public func checkValueEnteredByUser(userValue: [Int]) -> Bool{
         self.userSecretCode=userValue
+        counter+=1
         resultPlaced.removeAll()
         var secret = self.secretCode
         self.wellPlaced=0
@@ -250,7 +255,8 @@ class Game {
         }
         resultPlaced.shuffle()
         secret.removeAll()
-        history.append(Result(resultPlaced: resultPlaced, userSecretCode: userValue))
+        print(userValue)
+        history.append(Result(id: counter,resultPlaced: resultPlaced, userSecretCode: userValue))
         
         return isSuccess()
     }
@@ -266,11 +272,12 @@ class Game {
 
 
 class Result: Identifiable{
-    var id = UUID()
+    var id : Int
     var resultPlaced : [Color]
     var userSecretCode: [Int]
     
-    init(resultPlaced : [Color],userSecretCode: [Int]) {
+    init(id : Int,resultPlaced : [Color],userSecretCode: [Int]) {
+        self.id = id
         self.resultPlaced=resultPlaced
         self.userSecretCode=userSecretCode
     }
