@@ -12,13 +12,13 @@ struct ContentView: View {
     @State var gameIsInProgress=false
     @State var bestScore=0
     var body: some View {
-        Home()
+        GameView()
     }
     
 }
 
 
-struct Home : View{
+struct HomeView : View{
     var body: some View {
         
         NavigationView{
@@ -80,38 +80,38 @@ struct GameView : View{
                         
                         VStack {
                             
-                                HStack {
+                            HStack {
                                 
-                                    Circle()
-                                        .fill(
-                                            value.resultPlaced.indices.contains(0) ?  value.resultPlaced[0]
-                                                : Color.gray
-                                        )
-                                        .frame(width: 30, height: 30)
-                                    
-                                    Circle()
-                                        .fill(                                            value.resultPlaced.indices.contains(1) ?  value.resultPlaced[1]
-                                                                                            : Color.gray)
-                                        .frame(width: 30, height: 30)
-                                    
-                                }
+                                Circle()
+                                    .fill(
+                                        value.resultPlaced.indices.contains(0) ?  value.resultPlaced[0]
+                                            : Color.gray
+                                    )
+                                    .frame(width: 30, height: 30)
+                                
+                                Circle()
+                                    .fill(                                            value.resultPlaced.indices.contains(1) ?  value.resultPlaced[1]
+                                                                                        : Color.gray)
+                                    .frame(width: 30, height: 30)
+                                
+                            }
+                            
+                            
+                            HStack {
+                                
+                                Circle()
+                                    .fill(                 value.resultPlaced.indices.contains(2) ?  value.resultPlaced[2]
+                                                            : Color.gray)
+                                    .frame(width: 30, height: 30)
                                 
                                 
-                                HStack {
-                                    
-                                    Circle()
-                                        .fill(                 value.resultPlaced.indices.contains(2) ?  value.resultPlaced[2]
-                                                                                            : Color.gray)
-                                        .frame(width: 30, height: 30)
-                                    
-                                    
-                                    Circle()
-                                        .fill(                                            value.resultPlaced.indices.contains(3) ?  value.resultPlaced[3]
-                                                                                            : Color.gray)
-                                        .frame(width: 30, height: 30)
-                                    
-                                }
+                                Circle()
+                                    .fill(                                            value.resultPlaced.indices.contains(3) ?  value.resultPlaced[3]
+                                                                                        : Color.gray)
+                                    .frame(width: 30, height: 30)
                                 
+                            }
+                            
                             
                         }
                     }
@@ -125,8 +125,10 @@ struct GameView : View{
                 ForEach(self.basket.fruits, id: \.id) { fruit in
                     FruitView(fruit: fruit,  selectedFruits: $userSelectedFruit).onTapGesture {
                         if userSelectedFruit.count<game.level{
-                            userSelectedFruit.append(fruit.id)
-                            fruit.isSelected=true
+                            if !fruit.isSelected {
+                                userSelectedFruit.append(fruit.id)
+                                fruit.isSelected=true
+                            }
                         }
                         
                     }
@@ -174,7 +176,7 @@ struct FruitView : View {
     @State var fruit: Fruit
     @Binding var selectedFruits:[Int]
     var body: some View{
-        Image(fruit.name).resizable().aspectRatio(contentMode: .fit).opacity(fruit.isSelected ? 0.2: 1)
+        Image(fruit.name).resizable().aspectRatio(contentMode: .fit).opacity(fruit.isSelected ? 0.2: 1).disabled(fruit.isSelected)
     }
 }
 
@@ -207,6 +209,10 @@ class FruitBasket: ObservableObject{
     
 }
 
+enum GameLevel {
+    case easy, medium, hard
+}
+
 class Game: ObservableObject {
     @Published var history : [Result] = []
     var secretCode : [Int] = []
@@ -218,8 +224,14 @@ class Game: ObservableObject {
     var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray]
     var userSecretCode:[Int]=[]
     public func generateSecret(){
-        for _ in 1 ... level {
-            self.secretCode.append(generateIdentifier())
+        /*  for _ in 1 ... level {
+         self.secretCode.append(generateIdentifier())
+         }*/
+        while(secretCode.count<level){
+            let digit = generateIdentifier();
+            if !secretCode.contains(digit){
+                self.secretCode.append(digit)
+            }
         }
         if !history.isEmpty{
             history.removeAll()
@@ -254,6 +266,7 @@ class Game: ObservableObject {
             }
         }
         resultPlaced.shuffle()
+        print(resultPlaced)
         secret.removeAll()
         print(userValue)
         history.append(Result(id: counter,resultPlaced: resultPlaced, userSecretCode: userValue))
