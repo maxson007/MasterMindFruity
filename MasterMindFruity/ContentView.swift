@@ -62,46 +62,7 @@ struct GameView : View{
         VStack {
             List{
                 ForEach(game.history) { value in
-                    HStack{
-                        Text("\(value.id)").foregroundColor(Color.blue).multilineTextAlignment(.center).font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title)).rotationEffect(.radians(.pi))
-                            .scaleEffect(x: -1, y: 1, anchor: .center)
-                        Divider()
-                        ForEach(value.userSecretCode, id: \.self) { idFruit in
-                            HStack {
-                                Image(basket.fruits[idFruit-1].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
-                                    .scaleEffect(x: -1, y: 1, anchor: .center)
-                            }
-                            
-                        }
-                        Divider()
-                        VStack {
-                            HStack {
-                                Circle()
-                                    .fill(
-                                        value.resultPlaced.indices.contains(0) ?  value.resultPlaced[0] : Color.gray
-                                    )
-                                    .frame(width: 30, height: 30)
-                                
-                                Circle()
-                                    .fill(                                            value.resultPlaced.indices.contains(1) ?  value.resultPlaced[1] : Color.gray)
-                                    .frame(width: 30, height: 30)
-                                
-                            }
-                            
-                            HStack {
-                                Circle()
-                                    .fill(                 value.resultPlaced.indices.contains(2) ?  value.resultPlaced[2] : Color.gray)
-                                    .frame(width: 30, height: 30)
-                                
-                                
-                                Circle()
-                                    .fill(                                            value.resultPlaced.indices.contains(3) ?  value.resultPlaced[3] : Color.gray)
-                                    .frame(width: 30, height: 30)
-                                
-                            }
-                            
-                        }
-                    }
+                    ResultRowView(result: value, basket: basket)
                 }
                 
             }.rotationEffect(.radians(.pi))
@@ -282,5 +243,52 @@ class Result: Identifiable{
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct ResultRowView: View {
+    var result: Result
+    var basket: FruitBasket
+    var body: some View {
+        HStack{
+            Text("\(result.id)").foregroundColor(Color.blue).multilineTextAlignment(.center).font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title)).rotationEffect(.radians(.pi))
+                .scaleEffect(x: -1, y: 1, anchor: .center)
+            Divider()
+            ForEach(result.userSecretCode, id: \.self) { idFruit in
+                HStack {
+                    Image(basket.fruits[idFruit-1].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
+                        .scaleEffect(x: -1, y: 1, anchor: .center)
+                }
+                
+            }
+            Divider()
+            VStack {
+                HStack {
+                    Circle()
+                        .fill(
+                            result.resultPlaced.indices.contains(0) ?  result.resultPlaced[0] : Color.gray
+                        )
+                        .frame(width: 30, height: 30)
+                    
+                    Circle()
+                        .fill(                                            result.resultPlaced.indices.contains(1) ?  result.resultPlaced[1] : Color.gray)
+                        .frame(width: 30, height: 30)
+                    
+                }
+                
+                HStack {
+                    Circle()
+                        .fill(                 result.resultPlaced.indices.contains(2) ?  result.resultPlaced[2] : Color.gray)
+                        .frame(width: 30, height: 30)
+                    
+                    
+                    Circle()
+                        .fill(                                            result.resultPlaced.indices.contains(3) ?  result.resultPlaced[3] : Color.gray)
+                        .frame(width: 30, height: 30)
+                    
+                }
+                
+            }
+        }
     }
 }
