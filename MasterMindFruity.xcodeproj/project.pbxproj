@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		048A5E742573DDFB00EC09B2 /* FruitBasket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E732573DDFB00EC09B2 /* FruitBasket.swift */; };
+		048A5E792573E06200EC09B2 /* FruitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E782573E06200EC09B2 /* FruitView.swift */; };
+		048A5E7D2573E0E100EC09B2 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E7C2573E0E100EC09B2 /* GameView.swift */; };
+		048A5E812573E18200EC09B2 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E802573E18200EC09B2 /* Game.swift */; };
+		048A5E852573E1E900EC09B2 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E842573E1E900EC09B2 /* Result.swift */; };
+		048A5E882573E24500EC09B2 /* ResultRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E872573E24500EC09B2 /* ResultRowView.swift */; };
+		048A5E8B2573E2D000EC09B2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E8A2573E2D000EC09B2 /* HomeView.swift */; };
 		04C82C682565D4DC00EC4CED /* MasterMindFruityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */; };
 		04C82C6A2565D4DC00EC4CED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C82C692565D4DC00EC4CED /* ContentView.swift */; };
 		04C82C6C2565D4DD00EC4CED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C82C6B2565D4DD00EC4CED /* Assets.xcassets */; };
@@ -15,6 +22,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		048A5E732573DDFB00EC09B2 /* FruitBasket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitBasket.swift; sourceTree = "<group>"; };
+		048A5E782573E06200EC09B2 /* FruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitView.swift; sourceTree = "<group>"; };
+		048A5E7C2573E0E100EC09B2 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		048A5E802573E18200EC09B2 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		048A5E842573E1E900EC09B2 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		048A5E872573E24500EC09B2 /* ResultRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultRowView.swift; sourceTree = "<group>"; };
+		048A5E8A2573E2D000EC09B2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		04C82C642565D4DC00EC4CED /* MasterMindFruity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterMindFruity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterMindFruityApp.swift; sourceTree = "<group>"; };
 		04C82C692565D4DC00EC4CED /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -35,9 +49,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		048A5E722573DDBD00EC09B2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				048A5E732573DDFB00EC09B2 /* FruitBasket.swift */,
+				048A5E842573E1E900EC09B2 /* Result.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		048A5E772573E00E00EC09B2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				048A5E782573E06200EC09B2 /* FruitView.swift */,
+				048A5E7C2573E0E100EC09B2 /* GameView.swift */,
+				048A5E872573E24500EC09B2 /* ResultRowView.swift */,
+				048A5E8A2573E2D000EC09B2 /* HomeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		048A5E7F2573E14C00EC09B2 /* ViewModel  */ = {
+			isa = PBXGroup;
+			children = (
+				048A5E802573E18200EC09B2 /* Game.swift */,
+			);
+			path = "ViewModel ";
+			sourceTree = "<group>";
+		};
 		04C82C5B2565D4DC00EC4CED = {
 			isa = PBXGroup;
 			children = (
+				048A5E7F2573E14C00EC09B2 /* ViewModel  */,
 				04C82C662565D4DC00EC4CED /* MasterMindFruity */,
 				04C82C652565D4DC00EC4CED /* Products */,
 			);
@@ -56,6 +99,8 @@
 			children = (
 				04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */,
 				04C82C692565D4DC00EC4CED /* ContentView.swift */,
+				048A5E772573E00E00EC09B2 /* View */,
+				048A5E722573DDBD00EC09B2 /* Models */,
 				04C82C772565D51300EC4CED /* Juicy Fruity.otf */,
 				04C82C6B2565D4DD00EC4CED /* Assets.xcassets */,
 				04C82C702565D4DD00EC4CED /* Info.plist */,
@@ -142,8 +187,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048A5E8B2573E2D000EC09B2 /* HomeView.swift in Sources */,
+				048A5E882573E24500EC09B2 /* ResultRowView.swift in Sources */,
 				04C82C6A2565D4DC00EC4CED /* ContentView.swift in Sources */,
+				048A5E812573E18200EC09B2 /* Game.swift in Sources */,
 				04C82C682565D4DC00EC4CED /* MasterMindFruityApp.swift in Sources */,
+				048A5E742573DDFB00EC09B2 /* FruitBasket.swift in Sources */,
+				048A5E852573E1E900EC09B2 /* Result.swift in Sources */,
+				048A5E792573E06200EC09B2 /* FruitView.swift in Sources */,
+				048A5E7D2573E0E100EC09B2 /* GameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
