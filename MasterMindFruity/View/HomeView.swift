@@ -35,6 +35,8 @@ struct HomeView : View{
                     }
                     
                 
+            } .onDisappear {
+                self.isStartedGame = false
             }
         }.fullScreenCover(isPresented: $isStartedGame, content: GameView.init)
         
