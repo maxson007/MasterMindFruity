@@ -12,15 +12,38 @@ class Game: ObservableObject {
     @Published var history : [Result] = [] // tableau de l'historique d'une manche
     private var secretCode : [Int] = [] // tableau de stockage du code secret
     let numberOfFruits=6; // nombre de fruit présent dans le panier
-    let level=4; // nombre maximun de pions pour construire le code secret
+    var level : Int = 4; // nombre maximun de pions pour construire le code secret
     var wellPlaced: Int = 0; // nombre de pions (fruit) bien place
     var wrongPlace: Int = 0; //nombre de pions (fruit ) mal place
     var counter : Int = 0 //compteur d'essai
     var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray] //tableau de stockage des pions bien placés et mal placés
     var userSecretCode:[Int]=[] // tableau de stockage temporaire du code saisi par l'utilisateur
+    var maxNumberOfattempts: Int = 20 //nombre de tentative maximun version facille
+
+    /* Demarrer une partie de jeux */
+    public func start(complexite: Level = .easy){
+        switch complexite {
+        case .easy:
+            maxNumberOfattempts = 20
+            break
+        case .medium:
+            maxNumberOfattempts = 12
+            break
+        case .hard:
+            maxNumberOfattempts = 12
+            level = 6
+            break
+        }
+        counter = 0
+        if !history.isEmpty{
+            history.removeAll()
+        }
+        generateSecret(complexite: complexite);
+
+    }
     
     /* la fonction permet de génerer un code */
-    public func generateSecret(complexite: Level = .easy){
+    private func generateSecret(complexite: Level = .easy){
         secretCode.removeAll()
         switch complexite {
         case .easy:
@@ -32,16 +55,13 @@ class Game: ObservableObject {
             }
             break
             
-        case .hard , .medium:
+        default:
             for _ in 1 ... level {
                 self.secretCode.append(generateIdentifier())
             }
             break
         }
         
-        if !history.isEmpty{
-            history.removeAll()
-        }
         print("Nouveau code: \(secretCode)")
     }
     

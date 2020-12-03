@@ -10,6 +10,8 @@ import SwiftUI
 
 
 struct HomeView : View{
+    @State var isStartedGame: Bool = false
+
     var body: some View {
         
         NavigationView{
@@ -24,19 +26,26 @@ struct HomeView : View{
                     Image("Poire-serena-jaune").resizable().frame(width: 166/5, height: 336/5, alignment: .center)
                 }
                 Spacer()
-                NavigationLink(destination: GameView()){
+            
                     VStack {
                         Image(systemName: "play.circle").multilineTextAlignment(.center).font(Font.custom("Juicy Fruity", size: 50, relativeTo: .title)).foregroundColor(.blue)
                         Text("Start").foregroundColor(Color.blue).multilineTextAlignment(.center).font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title)).padding(.bottom, 20)
+                    }.onTapGesture {
+                        isStartedGame.toggle()
                     }
                     
-                }
-                
                 
             }
-        }
+        }.fullScreenCover(isPresented: $isStartedGame, content: GameView.init)
+
+
         
         
     }
 }
 
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
+    }
+}

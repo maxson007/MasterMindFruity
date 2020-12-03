@@ -9,7 +9,8 @@ import SwiftUI
 
 
 struct GameView : View{
-    
+    @Environment(\.presentationMode) var presentationMode
+
     @State var game = Game()
     
     @ObservedObject var basket: FruitBasket = FruitBasket()
@@ -18,9 +19,16 @@ struct GameView : View{
     @State var isWinner:Bool = false
     
     var body: some View{
-        
+
         VStack {
-            Text("Joueur 0 - 0 Ordinateur").font(Font.custom("Juicy Fruity", size: 12, relativeTo: .title)).foregroundColor(.green)
+            HStack {
+                Text(" 0 - 0 ").font(Font.custom("Juicy Fruity", size: 12, relativeTo: .title)).foregroundColor(.green).padding()
+                Spacer()
+             
+                Text("Exit").font(Font.custom("Juicy Fruity", size: 12, relativeTo: .title)).foregroundColor(.green).padding().onTapGesture {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
             List{
                 ForEach(game.history) { value in
                     ResultRowView(result: value, basket: basket)
@@ -56,15 +64,15 @@ struct GameView : View{
             .opacity(activateValidateButton() ? 1 : 0.5)
             
             
-        }.navigationBarBackButtonHidden(false).onAppear(
-            perform: {self.game.generateSecret()}
+        }.navigationBarBackButtonHidden(true).onAppear(
+            perform: {self.game.start()}
         ).alert(isPresented: $isWinner, content: {
             Alert(title: Text("Gagné !!"),
                   message: Text("Vous avez gagner la manche"),
                   dismissButton: .destructive(Text("Nouvelle manche"),
                                               action: {
                                                 withAnimation(Animation.easeIn(duration: 0.5)){
-                                                    game.generateSecret()
+                                                    game.start()
                                                 }
                                               })
             )
