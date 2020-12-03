@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040BA03A25795D57003A1294 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040BA03925795D57003A1294 /* Launch Screen.storyboard */; };
 		048A5E742573DDFB00EC09B2 /* FruitBasket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E732573DDFB00EC09B2 /* FruitBasket.swift */; };
 		048A5E792573E06200EC09B2 /* FruitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E782573E06200EC09B2 /* FruitView.swift */; };
 		048A5E7D2573E0E100EC09B2 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E7C2573E0E100EC09B2 /* GameView.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040BA03925795D57003A1294 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		048A5E732573DDFB00EC09B2 /* FruitBasket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitBasket.swift; sourceTree = "<group>"; };
 		048A5E782573E06200EC09B2 /* FruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitView.swift; sourceTree = "<group>"; };
 		048A5E7C2573E0E100EC09B2 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 		048A5E772573E00E00EC09B2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				040BA03925795D57003A1294 /* Launch Screen.storyboard */,
 				04C82C692565D4DC00EC4CED /* ContentView.swift */,
 				048A5E782573E06200EC09B2 /* FruitView.swift */,
 				048A5E7C2573E0E100EC09B2 /* GameView.swift */,
@@ -176,6 +179,7 @@
 			files = (
 				04C82C6F2565D4DD00EC4CED /* Preview Assets.xcassets in Resources */,
 				04C82C6C2565D4DD00EC4CED /* Assets.xcassets in Resources */,
+				040BA03A25795D57003A1294 /* Launch Screen.storyboard in Resources */,
 				04C82C782565D51300EC4CED /* Juicy Fruity.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

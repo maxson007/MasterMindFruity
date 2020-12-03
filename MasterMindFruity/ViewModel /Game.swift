@@ -10,7 +10,7 @@ import SwiftUI
 
 class Game: ObservableObject {
     @Published var history : [Result] = [] // tableau de stckage de l'historique d'une manche
-    var secretCode : [Int] = [] // tableau de stockage du code secret
+    private var secretCode : [Int] = [] // tableau de stockage du code secret
     let numberOfFruits=6; // nombre de fruit présent dans le panier
     let level=4; // niveau du code 4 pour un code à chiffre le niveau ne dois pas depasse le nombre de fruit
     var wellPlaced: Int = 0; // nombre de pions (fruit) bien place
@@ -19,7 +19,7 @@ class Game: ObservableObject {
     var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray] //tableau de stockage des pions bien placé et mal placé
     var userSecretCode:[Int]=[] // tableau de stockage teporaire du code saissie par l'utilisateur
     
-    /* la fonction permet de génerer un code*/
+    /* la fonction permet de génerer un code */
     public func generateSecret(complexite: Level = .easy){
         secretCode.removeAll()
         switch complexite {
@@ -53,6 +53,8 @@ class Game: ObservableObject {
         var secret = self.secretCode
         self.wellPlaced=0
         self.wrongPlace=0
+        
+        //recherche des pions bien placé
         for i in 0 ..< level
         {
             if(secret[i] == userValue[i] ){
@@ -62,6 +64,7 @@ class Game: ObservableObject {
             }
         }
         
+        //recherche des pions mal placé
         for i in 0 ..< level
         {
             if(secret.contains(userValue[i]) ){
@@ -73,9 +76,7 @@ class Game: ObservableObject {
             }
         }
         resultPlaced.shuffle()
-        print(resultPlaced)
         secret.removeAll()
-        print(userValue)
         history.append(Result(id: counter,resultPlaced: resultPlaced, userSecretCode: userValue))
         
         return isSuccess()
