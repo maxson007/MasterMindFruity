@@ -16,6 +16,7 @@ struct GameView : View{
     
     @State var userSelectedFruit:[Int]=[]
     @State var isWinner:Bool = false
+    
     var body: some View{
         
         VStack {
@@ -42,7 +43,7 @@ struct GameView : View{
                 }
                 
             }.padding(10)
-        
+            
             Button(action: {
                 isWinner = game.checkValueEnteredByUser(userValue: userSelectedFruit)
                 clearButton()
@@ -52,11 +53,16 @@ struct GameView : View{
             }.buttonStyle(ValiderButtonStyle())
             .disabled(!activateValidateButton())
             .opacity(activateValidateButton() ? 1 : 0.5)
-
+            
             
         }.navigationBarBackButtonHidden(false).onAppear(
             perform: {self.game.generateSecret()}
-        )
+        ).alert(isPresented: $isWinner, content: {
+                    Alert(title: Text("Winner"), message: Text("Vous avez gagner la manche"), dismissButton: .destructive(Text("Play Again"), action: {
+                        withAnimation(Animation.easeIn(duration: 0.5)){
+                            game.generateSecret()
+                        }
+                    }))        })
     }
     
     /* Reinitialiation du des fruits */
@@ -75,14 +81,14 @@ struct GameView : View{
 
 /* Style du button valider */
 struct ValiderButtonStyle: ButtonStyle {
-
-  func makeBody(configuration: Self.Configuration) -> some View {
-    configuration.label
-        .padding()
-        .foregroundColor(.white)
-        .background(Color(red: 0.69500756259999996, green: 0.85624021289999996, blue: 0.0083209406580000006, opacity: 1.0))
-        .cornerRadius(25.0).padding(.bottom, 10)
-  }
+    
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .padding()
+            .foregroundColor(.white)
+            .background(Color(red: 0.69500756259999996, green: 0.85624021289999996, blue: 0.0083209406580000006, opacity: 1.0))
+            .cornerRadius(25.0).padding(.bottom, 10)
+    }
 }
 
 struct GameView_Previews: PreviewProvider {

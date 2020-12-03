@@ -21,6 +21,7 @@ class Game: ObservableObject {
     
     /* la fonction permet de génerer un code*/
     public func generateSecret(complexite: Level = .easy){
+        secretCode.removeAll()
         switch complexite {
         case .easy:
             while(secretCode.count<level){
@@ -41,7 +42,7 @@ class Game: ObservableObject {
         if !history.isEmpty{
             history.removeAll()
         }
-        print(secretCode)
+        print("Nouveau code: \(secretCode)")
     }
     
     /* la fonction permet de verifier le code saisi*/
