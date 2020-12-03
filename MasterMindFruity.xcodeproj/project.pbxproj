@@ -61,6 +61,7 @@
 		048A5E772573E00E00EC09B2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04C82C692565D4DC00EC4CED /* ContentView.swift */,
 				048A5E782573E06200EC09B2 /* FruitView.swift */,
 				048A5E7C2573E0E100EC09B2 /* GameView.swift */,
 				048A5E872573E24500EC09B2 /* ResultRowView.swift */,
@@ -80,7 +81,6 @@
 		04C82C5B2565D4DC00EC4CED = {
 			isa = PBXGroup;
 			children = (
-				048A5E7F2573E14C00EC09B2 /* ViewModel  */,
 				04C82C662565D4DC00EC4CED /* MasterMindFruity */,
 				04C82C652565D4DC00EC4CED /* Products */,
 			);
@@ -97,8 +97,8 @@
 		04C82C662565D4DC00EC4CED /* MasterMindFruity */ = {
 			isa = PBXGroup;
 			children = (
+				048A5E7F2573E14C00EC09B2 /* ViewModel  */,
 				04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */,
-				04C82C692565D4DC00EC4CED /* ContentView.swift */,
 				048A5E772573E00E00EC09B2 /* View */,
 				048A5E722573DDBD00EC09B2 /* Models */,
 				04C82C772565D51300EC4CED /* Juicy Fruity.otf */,
