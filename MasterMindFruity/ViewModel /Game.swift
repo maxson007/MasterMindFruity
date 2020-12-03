@@ -9,15 +9,15 @@ import Foundation
 import SwiftUI
 
 class Game: ObservableObject {
-    @Published var history : [Result] = [] // tableau de stckage de l'historique d'une manche
+    @Published var history : [Result] = [] // tableau de l'historique d'une manche
     private var secretCode : [Int] = [] // tableau de stockage du code secret
     let numberOfFruits=6; // nombre de fruit présent dans le panier
-    let level=4; // niveau du code 4 pour un code à chiffre le niveau ne dois pas depasse le nombre de fruit
+    let level=4; // nombre maximun de pions pour construire le code secret
     var wellPlaced: Int = 0; // nombre de pions (fruit) bien place
     var wrongPlace: Int = 0; //nombre de pions (fruit ) mal place
     var counter : Int = 0 //compteur d'essai
-    var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray] //tableau de stockage des pions bien placé et mal placé
-    var userSecretCode:[Int]=[] // tableau de stockage teporaire du code saissie par l'utilisateur
+    var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray] //tableau de stockage des pions bien placés et mal placés
+    var userSecretCode:[Int]=[] // tableau de stockage temporaire du code saisi par l'utilisateur
     
     /* la fonction permet de génerer un code */
     public func generateSecret(complexite: Level = .easy){
@@ -75,6 +75,7 @@ class Game: ObservableObject {
                 }
             }
         }
+        
         resultPlaced.shuffle()
         secret.removeAll()
         history.append(Result(id: counter,resultPlaced: resultPlaced, userSecretCode: userValue))
