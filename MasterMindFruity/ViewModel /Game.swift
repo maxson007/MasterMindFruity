@@ -9,27 +9,35 @@ import Foundation
 import SwiftUI
 
 class Game: ObservableObject {
-    @Published var history : [Result] = [] // tableau de stckage de lhistorique d'une manche
+    @Published var history : [Result] = [] // tableau de stckage de l'historique d'une manche
     var secretCode : [Int] = [] // tableau de stockage du code secret
     let numberOfFruits=6; // nombre de fruit présent dans le panier
-    let level=4; // niveau du code 4 pour un code à chiffre
-    var wellPlaced: Int = 0; //bien place
-    var wrongPlace: Int = 0; //mal place
+    let level=4; // niveau du code 4 pour un code à chiffre le niveau ne dois pas depasse le nombre de fruit
+    var wellPlaced: Int = 0; // nombre de pions (fruit) bien place
+    var wrongPlace: Int = 0; //nombre de pions (fruit ) mal place
     var counter : Int = 0 //compteur d'essai
     var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray] //tableau de stockage des pions bien placé et mal placé
     var userSecretCode:[Int]=[] // tableau de stockage teporaire du code saissie par l'utilisateur
     
     /* la fonction permet de génerer un code*/
-    public func generateSecret(){
-        /*  for _ in 1 ... level {
-         self.secretCode.append(generateIdentifier())
-         }*/
-        while(secretCode.count<level){
-            let digit = generateIdentifier();
-            if !secretCode.contains(digit){
-                self.secretCode.append(digit)
+    public func generateSecret(complexite: Level = .easy){
+        switch complexite {
+        case .easy:
+            while(secretCode.count<level){
+                let digit = generateIdentifier();
+                if !secretCode.contains(digit){
+                    self.secretCode.append(digit)
+                }
             }
+            break
+            
+        case .hard , .medium:
+            for _ in 1 ... level {
+                self.secretCode.append(generateIdentifier())
+            }
+            break
         }
+        
         if !history.isEmpty{
             history.removeAll()
         }
@@ -82,3 +90,7 @@ class Game: ObservableObject {
     }
 }
 
+/*  niveau */
+enum Level {
+    case easy,medium,hard
+}
