@@ -45,7 +45,7 @@ class Game: ObservableObject {
         print("Nouveau code: \(secretCode)")
     }
     
-    /* la fonction permet de verifier le code saisi*/
+    /* la fonction permet de verifier le code saisi */
     public func checkValueEnteredByUser(userValue: [Int]) -> Bool{
         self.userSecretCode=userValue
         counter+=1

@@ -20,6 +20,7 @@ struct GameView : View{
     var body: some View{
         
         VStack {
+            Text("Joueur 0 - 0 Ordinateur").font(Font.custom("Juicy Fruity", size: 12, relativeTo: .title)).foregroundColor(.green)
             List{
                 ForEach(game.history) { value in
                     ResultRowView(result: value, basket: basket)
@@ -58,11 +59,17 @@ struct GameView : View{
         }.navigationBarBackButtonHidden(false).onAppear(
             perform: {self.game.generateSecret()}
         ).alert(isPresented: $isWinner, content: {
-                    Alert(title: Text("Winner"), message: Text("Vous avez gagner la manche"), dismissButton: .destructive(Text("Play Again"), action: {
-                        withAnimation(Animation.easeIn(duration: 0.5)){
-                            game.generateSecret()
-                        }
-                    }))        })
+            Alert(title: Text("Gagné !!"),
+                  message: Text("Vous avez gagner la manche"),
+                  dismissButton: .destructive(Text("Nouvelle manche"),
+                                              action: {
+                                                withAnimation(Animation.easeIn(duration: 0.5)){
+                                                    game.generateSecret()
+                                                }
+                                              })
+            )
+            
+        })
     }
     
     /* Reinitialiation du des fruits */
