@@ -37,9 +37,6 @@ struct HomeView : View{
                 
             }
         }.fullScreenCover(isPresented: $isStartedGame, content: GameView.init)
-
-
-        
         
     }
 }

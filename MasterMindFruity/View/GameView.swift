@@ -22,7 +22,7 @@ struct GameView : View{
 
         VStack {
             HStack {
-                Text(" 0 - 0 ").font(Font.custom("Juicy Fruity", size: 12, relativeTo: .title)).foregroundColor(.green).padding()
+                Text("Player: 0 vs System: 0 ").foregroundColor(.green).padding()
                 Spacer()
              
                 Text("Exit").font(Font.custom("Juicy Fruity", size: 12, relativeTo: .title)).foregroundColor(.green).padding().onTapGesture {
