@@ -9,15 +9,17 @@ import Foundation
 import SwiftUI
 
 class Game: ObservableObject {
-    @Published var history : [Result] = []
-    var secretCode : [Int] = []
-    let numberOfFruits=6;
-    let level=4;
+    @Published var history : [Result] = [] // tableau de stckage de lhistorique d'une manche
+    var secretCode : [Int] = [] // tableau de stockage du code secret
+    let numberOfFruits=6; // nombre de fruit présent dans le panier
+    let level=4; // niveau du code 4 pour un code à chiffre
     var wellPlaced: Int = 0; //bien place
     var wrongPlace: Int = 0; //mal place
-    var counter : Int = 0
-    var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray]
-    var userSecretCode:[Int]=[]
+    var counter : Int = 0 //compteur d'essai
+    var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray] //tableau de stockage des pions bien placé et mal placé
+    var userSecretCode:[Int]=[] // tableau de stockage teporaire du code saissie par l'utilisateur
+    
+    /* la fonction permet de génerer un code*/
     public func generateSecret(){
         /*  for _ in 1 ... level {
          self.secretCode.append(generateIdentifier())
@@ -34,6 +36,7 @@ class Game: ObservableObject {
         print(secretCode)
     }
     
+    /* la fonction permet de verifier le code saisi*/
     public func checkValueEnteredByUser(userValue: [Int]) -> Bool{
         self.userSecretCode=userValue
         counter+=1
@@ -73,6 +76,7 @@ class Game: ObservableObject {
         return self.wellPlaced == self.level
     }
     
+    /* generation d'un identifiant compris entre 1 et 6 */
     private func generateIdentifier() -> Int{
         return (Int(arc4random()) % self.numberOfFruits)+1
     }
