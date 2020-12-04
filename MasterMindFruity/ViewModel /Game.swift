@@ -8,30 +8,65 @@
 import Foundation
 import SwiftUI
 
+/*  niveau */
+enum Level {
+    case easy,medium,hard
+}
+
 class Game: ObservableObject {
     @Published var history : [Result] = [] // tableau de l'historique d'une manche
     private var secretCode : [Int] = [] // tableau de stockage du code secret
     let numberOfFruits=6; // nombre de fruit présent dans le panier
-    var level : Int = 4; // nombre maximun de pions pour construire le code secret
+    var secretCodeLength : Int = 4; // nombre maximun de pions pour construire le code secret
     var wellPlaced: Int = 0; // nombre de pions (fruit) bien place
     var wrongPlace: Int = 0; //nombre de pions (fruit ) mal place
     var counter : Int = 0 //compteur d'essai
     var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray] //tableau de stockage des pions bien placés et mal placés
     var userSecretCode:[Int]=[] // tableau de stockage temporaire du code saisi par l'utilisateur
     var maxNumberOfattempts: Int = 20 //nombre de tentative maximun version facille
+    var score = Score() //structure score
+    var alertTitle: String {
+        get{
+            if(isSuccess){
+                return "Gagné !! 🥳🤩😁"
+            }
+            return "Perdu !! 🤪🥺😡"
+        }
 
+    }
+    var alertMessage:String {
+        get {
+            if(isSuccess){
+                return "Vous avez gagné la partie 🥳"
+            }
+            return "Vous avez perdu la partie 😡"
+        }
+    }
+    
+    var isGameOver: Bool {
+        get {
+            return (counter == maxNumberOfattempts) || isSuccess
+        }
+    }
+    
+    var isSuccess: Bool{
+        get{
+            return self.wellPlaced == self.secretCodeLength
+        }
+    }
+    
     /* Demarrer une partie de jeux */
     public func start(complexite: Level = .easy){
         switch complexite {
         case .easy:
-            maxNumberOfattempts = 20
+            maxNumberOfattempts = 15
             break
         case .medium:
             maxNumberOfattempts = 12
             break
         case .hard:
             maxNumberOfattempts = 12
-            level = 6
+            secretCodeLength = 6
             break
         }
         counter = 0
@@ -39,7 +74,6 @@ class Game: ObservableObject {
             history.removeAll()
         }
         generateSecret(complexite: complexite);
-
     }
     
     /* la fonction permet de génerer un code */
@@ -47,7 +81,7 @@ class Game: ObservableObject {
         secretCode.removeAll()
         switch complexite {
         case .easy:
-            while(secretCode.count<level){
+            while(secretCode.count<secretCodeLength){
                 let digit = generateIdentifier();
                 if !secretCode.contains(digit){
                     self.secretCode.append(digit)
@@ -56,7 +90,7 @@ class Game: ObservableObject {
             break
             
         default:
-            for _ in 1 ... level {
+            for _ in 1 ... secretCodeLength {
                 self.secretCode.append(generateIdentifier())
             }
             break
@@ -75,7 +109,7 @@ class Game: ObservableObject {
         self.wrongPlace=0
         
         //recherche des pions bien placé
-        for i in 0 ..< level
+        for i in 0 ..< secretCodeLength
         {
             if(secret[i] == userValue[i] ){
                 self.wellPlaced+=1
@@ -85,7 +119,7 @@ class Game: ObservableObject {
         }
         
         //recherche des pions mal placé
-        for i in 0 ..< level
+        for i in 0 ..< secretCodeLength
         {
             if(secret.contains(userValue[i]) ){
                 self.wrongPlace+=1
@@ -99,21 +133,23 @@ class Game: ObservableObject {
         resultPlaced.shuffle()
         secret.removeAll()
         history.append(Result(id: counter,resultPlaced: resultPlaced, userSecretCode: userValue))
-        
-        return isSuccess()
-    }
-    
-    private func isSuccess() -> Bool{
-        return self.wellPlaced == self.level
+        scoreManger()
+        return isGameOver
     }
     
     /* generation d'un identifiant compris entre 1 et 6 */
     private func generateIdentifier() -> Int{
         return (Int(arc4random()) % self.numberOfFruits)+1
     }
+    
+    public func scoreManger(){
+        if(isGameOver){
+            if(isSuccess){
+                score.incrementScorePlayer()
+            }else {
+                score.incrementScoreSystem()
+            }
+        }
+    }
 }
 
-/*  niveau */
-enum Level {
-    case easy,medium,hard
-}

@@ -16,13 +16,13 @@ struct GameView : View{
     @ObservedObject var basket: FruitBasket = FruitBasket()
     
     @State var userSelectedFruit:[Int]=[]
-    @State var isWinner:Bool = false
-    
+    @State var isGameOver:Bool = false
+
     var body: some View{
 
         VStack {
             HStack {
-                Text("Player: 0 vs System: 0 ").foregroundColor(.green).padding()
+                Text("Player: \(game.score.player) vs System: \(game.score.system) ").foregroundColor(.green).padding()
                 Spacer()
              
                 Text("Exit").font(Font.custom("Juicy Fruity", size: 12, relativeTo: .title)).foregroundColor(.green).padding().onTapGesture {
@@ -41,7 +41,7 @@ struct GameView : View{
             HStack {
                 ForEach(self.basket.fruits, id: \.id) { fruit in
                     FruitView(fruit: fruit,  selectedFruits: $userSelectedFruit).onTapGesture {
-                        if userSelectedFruit.count<game.level{
+                        if userSelectedFruit.count<game.secretCodeLength{
                             if !fruit.isSelected {
                                 userSelectedFruit.append(fruit.id)
                                 fruit.isSelected=true
@@ -54,7 +54,7 @@ struct GameView : View{
             }.padding(10)
             
             Button(action: {
-                isWinner = game.checkValueEnteredByUser(userValue: userSelectedFruit)
+                isGameOver = game.checkValueEnteredByUser(userValue: userSelectedFruit)
                 clearButton()
             }) {
                 Text("Valider !")
@@ -66,10 +66,11 @@ struct GameView : View{
             
         }.navigationBarBackButtonHidden(true).onAppear(
             perform: {self.game.start()}
-        ).alert(isPresented: $isWinner, content: {
-            Alert(title: Text("Gagné !!"),
-                  message: Text("Vous avez gagner la manche"),
-                  dismissButton: .destructive(Text("Nouvelle manche"),
+        ).alert(isPresented: $isGameOver, content: {
+        
+            Alert(title: Text(game.alertTitle),
+                  message: Text(game.alertMessage),
+                  dismissButton: .destructive(Text("Nouvelle partie"),
                                               action: {
                                                 withAnimation(Animation.easeIn(duration: 0.5)){
                                                     game.start()
@@ -89,7 +90,7 @@ struct GameView : View{
     }
     /* verification si on active le button valider*/
     private func activateValidateButton() ->Bool{
-        return userSelectedFruit.count == game.level
+        return userSelectedFruit.count == game.secretCodeLength
     }
     
 }
