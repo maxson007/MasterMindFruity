@@ -66,19 +66,7 @@ struct GameView : View{
                 
             }.navigationBarBackButtonHidden(true).onAppear(
                 perform: {self.game.start()}
-            ).alert(isPresented: $isGameOver, content: {
-                
-                Alert(title: Text(game.alertTitle),
-                      message: Text(game.alertMessage),
-                      dismissButton: .destructive(Text("Nouvelle partie"),
-                                                  action: {
-                                                    withAnimation(Animation.easeIn(duration: 0.5)){
-                                                        game.start()
-                                                    }
-                                                  })
-                )
-                
-            })
+            )
         }else{
             GameOverView(title: game.alertTitle, message: game.alertMessage, isGameOver: $isGameOver, secretCode: game.secretCode){
                 print("press nouvelle partie")
