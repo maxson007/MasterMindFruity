@@ -23,7 +23,7 @@ class Game: ObservableObject {
     var counter : Int = 0 //compteur d'essai
     var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray] //tableau de stockage des pions bien placés et mal placés
     var userSecretCode:[Int]=[] // tableau de stockage temporaire du code saisi par l'utilisateur
-    var maxNumberOfattempts: Int = 20 //nombre de tentative maximun version facille
+    var maxNumberOfattempts: Int = 20 //nombre de tentative maximun
     var score = Score() //structure score
     var alertTitle: String {
         get{
