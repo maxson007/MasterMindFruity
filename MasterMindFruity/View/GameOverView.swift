@@ -14,6 +14,7 @@ struct GameOverView: View {
     @Binding var isGameOver: Bool
     var secretCode: [Int]
     var basket: FruitBasket = FruitBasket()
+    var onPressNewParty: () -> Void = { }
     var body: some View {
         
             VStack {
@@ -35,6 +36,7 @@ struct GameOverView: View {
                 HStack(spacing: 20) {
                     Button(action:  {
                         self.isGameOver.toggle()
+                        self.onPressNewParty()
                     }){
                         Text("Nouvelle partie").font(Font.custom("Juicy Fruity", size: 16, relativeTo: .title)).foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))).padding()
                     }

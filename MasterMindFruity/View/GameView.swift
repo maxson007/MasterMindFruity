@@ -80,7 +80,10 @@ struct GameView : View{
                 
             })
         }else{
-            GameOverView(title: game.alertTitle, message: game.alertMessage, isGameOver: $isGameOver, secretCode: game.secretCode)
+            GameOverView(title: game.alertTitle, message: game.alertMessage, isGameOver: $isGameOver, secretCode: game.secretCode){
+                print("press nouvelle partie")
+                game.start()
+            }
         }
     }
     
