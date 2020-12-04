@@ -16,6 +16,7 @@
 		048A5E882573E24500EC09B2 /* ResultRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E872573E24500EC09B2 /* ResultRowView.swift */; };
 		048A5E8B2573E2D000EC09B2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5E8A2573E2D000EC09B2 /* HomeView.swift */; };
 		04A75518257A49E10007D44B /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A75517257A49E10007D44B /* Score.swift */; };
+		04A7551B257AA7E40007D44B /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7551A257AA7E40007D44B /* GameOverView.swift */; };
 		04C82C682565D4DC00EC4CED /* MasterMindFruityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */; };
 		04C82C6A2565D4DC00EC4CED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C82C692565D4DC00EC4CED /* ContentView.swift */; };
 		04C82C6C2565D4DD00EC4CED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C82C6B2565D4DD00EC4CED /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 		048A5E872573E24500EC09B2 /* ResultRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultRowView.swift; sourceTree = "<group>"; };
 		048A5E8A2573E2D000EC09B2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		04A75517257A49E10007D44B /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		04A7551A257AA7E40007D44B /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		04C82C642565D4DC00EC4CED /* MasterMindFruity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterMindFruity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterMindFruityApp.swift; sourceTree = "<group>"; };
 		04C82C692565D4DC00EC4CED /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				048A5E7C2573E0E100EC09B2 /* GameView.swift */,
 				048A5E872573E24500EC09B2 /* ResultRowView.swift */,
 				048A5E8A2573E2D000EC09B2 /* HomeView.swift */,
+				04A7551A257AA7E40007D44B /* GameOverView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				048A5E742573DDFB00EC09B2 /* FruitBasket.swift in Sources */,
 				048A5E852573E1E900EC09B2 /* Result.swift in Sources */,
 				048A5E792573E06200EC09B2 /* FruitView.swift in Sources */,
+				04A7551B257AA7E40007D44B /* GameOverView.swift in Sources */,
 				048A5E7D2573E0E100EC09B2 /* GameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -28,7 +28,7 @@ class Game: ObservableObject {
     var alertTitle: String {
         get{
             if(isSuccess){
-                return "Gagné !! 🥳🤩😁"
+                return "Gagne !! 🥳🤩😁"
             }
             return "Perdu !! 🤪🥺😡"
         }
