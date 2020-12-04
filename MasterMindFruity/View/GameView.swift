@@ -80,7 +80,7 @@ struct GameView : View{
                 
             })
         }else{
-            GameOverView(title: game.alertTitle, message: game.alertMessage, isGameOver: $isGameOver, secretCode: userSelectedFruit)
+            GameOverView(title: game.alertTitle, message: game.alertMessage, isGameOver: $isGameOver, secretCode: game.secretCode)
         }
     }
     

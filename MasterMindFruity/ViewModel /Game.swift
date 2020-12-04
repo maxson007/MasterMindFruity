@@ -15,7 +15,7 @@ enum Level {
 
 class Game: ObservableObject {
     @Published var history : [Result] = [] // tableau de l'historique d'une manche
-    private var secretCode : [Int] = [] // tableau de stockage du code secret
+    var secretCode : [Int] = [] // tableau de stockage du code secret
     let numberOfFruits=6; // nombre de fruit présent dans le panier
     var secretCodeLength : Int = 4; // nombre maximun de pions pour construire le code secret
     var wellPlaced: Int = 0; // nombre de pions (fruit) bien place
