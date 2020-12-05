@@ -75,7 +75,7 @@ struct GameView : View{
         }
     }
     
-    /* Reinitialiation du des fruits */
+    /* Reinitialiation du des fruits (bouttons) */
     private  func clearButton(){
         for i in 0 ..< basket.fruits.count{
             self.basket.fruits[i].isSelected=false
