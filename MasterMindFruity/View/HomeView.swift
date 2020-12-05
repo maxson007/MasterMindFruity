@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-
+/* Page d'aceuil */
 struct HomeView : View{
     @State var isStartedGame: Bool = false
 

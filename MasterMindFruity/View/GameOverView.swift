@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+/* La vue qui affiche le resultat de la partie gagné ou perdu*/
 struct GameOverView: View {
     let screenSize = UIScreen.main.bounds
     var title: String

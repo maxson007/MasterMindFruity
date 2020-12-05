@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-
+/* Cette classe permet l'affichage d'une ligne dans la liste de proposition */
 struct ResultRowView: View {
     var result: Result
     var basket: FruitBasket
