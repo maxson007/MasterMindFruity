@@ -17,7 +17,7 @@ struct GameView : View{
     
     @State var userSelectedFruit:[Int]=[]
     @State var isGameOver:Bool = false
-    
+    @State var userSelectedFruitIsDuplicate: Bool = false
     var body: some View{
         if !isGameOver{
             VStack {
@@ -54,8 +54,12 @@ struct GameView : View{
                 }.padding(10)
                 
                 Button(action: {
-                    isGameOver = game.checkValueEnteredByUser(userValue: userSelectedFruit)
+                    userSelectedFruitIsDuplicate=game.isDuplicate(userValue: userSelectedFruit)
+                    if !userSelectedFruitIsDuplicate{
+                        isGameOver = game.checkValueEnteredByUser(userValue: userSelectedFruit)
+                    }
                     clearButton()
+
                 }) {
                     Text("Valider !")
                         .font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title))
@@ -66,12 +70,17 @@ struct GameView : View{
                 
             }.navigationBarBackButtonHidden(true).onAppear(
                 perform: {self.game.start()}
-            )
+            ).alert(isPresented: $userSelectedFruitIsDuplicate, content: {
+                
+                Alert(title: Text("👮🏾‍♀️ Attention !!! 🤪"),
+                      message: Text("Vous avez déjà composé cette combinaison")
+                )})
         }else{
-            GameOverView(title: game.alertTitle, message: game.alertMessage, isGameOver: $isGameOver, secretCode: game.secretCode){
+            GameOverView(title: game.alertTitle, message: game.alertMessage, isGameOver: $isGameOver, secretCode: game.secretCode, isPlayerSuccess: game.isSuccess, onPressNewParty: {
                 print("press nouvelle partie")
                 game.start()
-            }
+                
+            })
         }
     }
     

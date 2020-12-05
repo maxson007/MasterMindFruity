@@ -142,6 +142,7 @@ class Game: ObservableObject {
         return (Int(arc4random()) % self.numberOfFruits)+1
     }
     
+    /* Gestion du score */
     public func scoreManger(){
         if(isGameOver){
             if(isSuccess){
@@ -150,6 +151,18 @@ class Game: ObservableObject {
                 score.incrementScoreSystem()
             }
         }
+    }
+    
+    /* Detection des doublon dans les propositions de code du joueur*/
+    public func isDuplicate(userValue: [Int])->Bool{
+        
+        for result in history {
+            if(result.userSecretCode.elementsEqual(userValue)){
+                return true
+            }
+        }
+        
+        return false
     }
 }
 
