@@ -19,7 +19,7 @@ class Game: ObservableObject {
     let numberOfFruits=6; // nombre de fruit présent dans le panier
     var secretCodeLength : Int = 4; // nombre maximun de pions pour construire le code secret
     var wellPlaced: Int = 0; // nombre de pions (fruit) bien place
-    var wrongPlace: Int = 0; //nombre de pions (fruit ) mal place
+    var wrongPlaced: Int = 0; //nombre de pions (fruit ) mal place
     var counter : Int = 0 //compteur d'essai
     var resultPlaced: [Color]=[Color.gray,Color.gray,Color.gray,Color.gray] //tableau de stockage des pions bien placés et mal placés
     var userSecretCode:[Int]=[] // tableau de stockage temporaire du code saisi par l'utilisateur
@@ -76,7 +76,7 @@ class Game: ObservableObject {
         generateSecret(complexite: complexite);
     }
     
-    /* la fonction permet de génerer un code */
+    /* la methode permet de génerer un code */
     private func generateSecret(complexite: Level = .easy){
         secretCode.removeAll()
         switch complexite {
@@ -99,14 +99,14 @@ class Game: ObservableObject {
         print("Nouveau code: \(secretCode)")
     }
     
-    /* la fonction permet de verifier le code saisi */
+    /* la methode permet de verifier le code saisi */
     public func checkValueEnteredByUser(userValue: [Int]) -> Bool{
         self.userSecretCode=userValue
         counter+=1
         resultPlaced.removeAll()
         var secret = self.secretCode
         self.wellPlaced=0
-        self.wrongPlace=0
+        self.wrongPlaced=0
         
         //recherche des pions bien placé
         for i in 0 ..< secretCodeLength
@@ -122,7 +122,7 @@ class Game: ObservableObject {
         for i in 0 ..< secretCodeLength
         {
             if(secret.contains(userValue[i]) ){
-                self.wrongPlace+=1
+                self.wrongPlaced+=1
                 resultPlaced.append(Color.red)
                 if let index = secret.firstIndex(of: userValue[i]) {
                     secret[index] = -1
