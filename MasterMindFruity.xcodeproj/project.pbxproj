@@ -18,9 +18,7 @@
 		04A75518257A49E10007D44B /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A75517257A49E10007D44B /* Score.swift */; };
 		04A7551B257AA7E40007D44B /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7551A257AA7E40007D44B /* GameOverView.swift */; };
 		04A75520257BF29D0007D44B /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7551F257BF29D0007D44B /* SoundPlayer.swift */; };
-		04A75526257BFCA30007D44B /* sms-alert-5-daniel_simon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04A75523257BFCA30007D44B /* sms-alert-5-daniel_simon.mp3 */; };
 		04A75527257BFCA30007D44B /* Ta Da-SoundBible.com-1884170640.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04A75524257BFCA30007D44B /* Ta Da-SoundBible.com-1884170640.mp3 */; };
-		04A75528257BFCA30007D44B /* sms-alert-4-daniel_simon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04A75525257BFCA30007D44B /* sms-alert-4-daniel_simon.mp3 */; };
 		04A7552F257C087B0007D44B /* TunePocket-Access-Denied-Error-Buzz-Preview.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04A7552E257C087B0007D44B /* TunePocket-Access-Denied-Error-Buzz-Preview.mp3 */; };
 		04C82C682565D4DC00EC4CED /* MasterMindFruityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */; };
 		04C82C6A2565D4DC00EC4CED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C82C692565D4DC00EC4CED /* ContentView.swift */; };
@@ -41,9 +39,7 @@
 		04A75517257A49E10007D44B /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		04A7551A257AA7E40007D44B /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		04A7551F257BF29D0007D44B /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
-		04A75523257BFCA30007D44B /* sms-alert-5-daniel_simon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sms-alert-5-daniel_simon.mp3"; sourceTree = "<group>"; };
 		04A75524257BFCA30007D44B /* Ta Da-SoundBible.com-1884170640.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Ta Da-SoundBible.com-1884170640.mp3"; sourceTree = "<group>"; };
-		04A75525257BFCA30007D44B /* sms-alert-4-daniel_simon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sms-alert-4-daniel_simon.mp3"; sourceTree = "<group>"; };
 		04A7552E257C087B0007D44B /* TunePocket-Access-Denied-Error-Buzz-Preview.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "TunePocket-Access-Denied-Error-Buzz-Preview.mp3"; sourceTree = "<group>"; };
 		04C82C642565D4DC00EC4CED /* MasterMindFruity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterMindFruity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C82C672565D4DC00EC4CED /* MasterMindFruityApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterMindFruityApp.swift; sourceTree = "<group>"; };
@@ -109,8 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				04A7552E257C087B0007D44B /* TunePocket-Access-Denied-Error-Buzz-Preview.mp3 */,
-				04A75525257BFCA30007D44B /* sms-alert-4-daniel_simon.mp3 */,
-				04A75523257BFCA30007D44B /* sms-alert-5-daniel_simon.mp3 */,
 				04A75524257BFCA30007D44B /* Ta Da-SoundBible.com-1884170640.mp3 */,
 			);
 			path = sound;
@@ -215,10 +209,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				04C82C6F2565D4DD00EC4CED /* Preview Assets.xcassets in Resources */,
-				04A75526257BFCA30007D44B /* sms-alert-5-daniel_simon.mp3 in Resources */,
 				04A7552F257C087B0007D44B /* TunePocket-Access-Denied-Error-Buzz-Preview.mp3 in Resources */,
 				04A75527257BFCA30007D44B /* Ta Da-SoundBible.com-1884170640.mp3 in Resources */,
-				04A75528257BFCA30007D44B /* sms-alert-4-daniel_simon.mp3 in Resources */,
 				04C82C6C2565D4DD00EC4CED /* Assets.xcassets in Resources */,
 				040BA03A25795D57003A1294 /* Launch Screen.storyboard in Resources */,
 				04C82C782565D51300EC4CED /* Juicy Fruity.otf in Resources */,

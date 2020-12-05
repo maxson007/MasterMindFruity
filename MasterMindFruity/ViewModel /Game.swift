@@ -153,7 +153,7 @@ class Game: ObservableObject {
         }
     }
     
-    /* Detection des doublon dans les propositions de code du joueur*/
+    /* Detection des doublons dans les propositions de code du joueur*/
     public func isDuplicate(userValue: [Int])->Bool{
         
         for result in history {
