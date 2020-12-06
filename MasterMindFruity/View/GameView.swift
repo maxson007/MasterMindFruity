@@ -41,12 +41,7 @@ struct GameView : View{
                 HStack {
                     ForEach(self.basket.fruits, id: \.id) { fruit in
                         FruitView(fruit: fruit,  selectedFruits: $userSelectedFruit).onTapGesture {
-                            if userSelectedFruit.count<game.secretCodeLength{
-                                if !fruit.isSelected {
-                                    userSelectedFruit.append(fruit.id)
-                                    fruit.isSelected=true
-                                }
-                            }
+                            selectFruitToggle(fruit: fruit)
                             
                         }
                     }
@@ -59,7 +54,7 @@ struct GameView : View{
                         isGameOver = game.checkValueEnteredByUser(userValue: userSelectedFruit)
                     }
                     clearButton()
-
+                    
                 }) {
                     Text("Valider !")
                         .font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title))
@@ -71,10 +66,10 @@ struct GameView : View{
             }.navigationBarBackButtonHidden(true).onAppear(
                 perform: {self.game.start()}
             ).alert(isPresented: $userSelectedFruitIsDuplicate, content: {
-                
-                Alert(title: Text("👮🏾‍♀️ Attention !!! 🤪"),
-                      message: Text("Vous avez déjà composé cette combinaison")
-                )})
+                        
+                        Alert(title: Text("👮🏾‍♀️ Attention !!! 🤪"),
+                              message: Text("Vous avez déjà composé cette combinaison")
+                        )})
         }else{
             GameOverView(title: game.alertTitle, message: game.alertMessage, isGameOver: $isGameOver, secretCode: game.secretCode, isPlayerSuccess: game.isSuccess, onPressNewParty: {
                 print("press nouvelle partie")
@@ -94,6 +89,19 @@ struct GameView : View{
     /* verification si on active le button valider*/
     private func activateValidateButton() ->Bool{
         return userSelectedFruit.count == game.secretCodeLength
+    }
+    
+    private func selectFruitToggle(fruit: Fruit){
+        
+        if !fruit.isSelected {
+            userSelectedFruit.append(fruit.id)
+            fruit.isSelected.toggle()
+        }else{
+            userSelectedFruit.removeAll(where: {
+                $0 == fruit.id
+            })
+            fruit.isSelected.toggle()
+        }
     }
     
 }
