@@ -49,7 +49,7 @@ struct ResultRowView: View {
                 }
                 
             }
-        }
+        }.padding().animation(.spring())
     }
 }
 

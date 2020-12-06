@@ -29,13 +29,26 @@ struct GameView : View{
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
-                List{
-                    ForEach(game.history) { value in
-                        ResultRowView(result: value, basket: basket)
+                ScrollView(.vertical) {
+                    ScrollViewReader { scrollView in
+                        LazyVStack {
+                            ForEach(game.history) { value in
+                                
+                                ZStack {
+                                    ResultRowView(result: value, basket: basket).id(game.history.count)
+                                    
+                                }
+                                Divider()
+                            }
+                        }.onChange(of: game.history, perform: { value in
+                            withAnimation(.spring()){
+                                scrollView.scrollTo(game.history.count)
+                            }
+                        
+                        })
                     }
-                    
                 }.rotationEffect(.radians(.pi))
-                .scaleEffect(x: -1, y: 1, anchor: .center)
+                .scaleEffect(x: -1, y: 1, anchor: .bottom)
                 Spacer()
                 Divider()
                 HStack {
