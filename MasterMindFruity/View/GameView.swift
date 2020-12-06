@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-
+import AudioToolbox
+import AVFoundation
 
 struct GameView : View{
     @Environment(\.presentationMode) var presentationMode
@@ -18,6 +19,9 @@ struct GameView : View{
     @State var userSelectedFruit:[Int]=[]
     @State var isGameOver:Bool = false
     @State var userSelectedFruitIsDuplicate: Bool = false
+    let systemSoundID: SystemSoundID = 1106
+
+
     var body: some View{
         if !isGameOver{
             VStack {
@@ -67,7 +71,7 @@ struct GameView : View{
                         isGameOver = game.checkValueEnteredByUser(userValue: userSelectedFruit)
                     }
                     clearButton()
-                    
+                    AudioServicesPlaySystemSound(1106)
                 }) {
                     Text("Valider !")
                         .font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title))
