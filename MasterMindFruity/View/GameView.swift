@@ -19,7 +19,8 @@ struct GameView : View{
     @State var userSelectedFruit:[Int]=[]
     @State var isGameOver:Bool = false
     @State var userSelectedFruitIsDuplicate: Bool = false
-    let systemSoundID: SystemSoundID = 1106
+    let systemSoundIDFruitTap: SystemSoundID = 1104
+    let systemSoundIDButtonTap: SystemSoundID = 1105
 
 
     var body: some View{
@@ -59,7 +60,7 @@ struct GameView : View{
                     ForEach(self.basket.fruits, id: \.id) { fruit in
                         FruitView(fruit: fruit,  selectedFruits: $userSelectedFruit).onTapGesture {
                             selectFruitToggle(fruit: fruit)
-                            
+                            AudioServicesPlaySystemSound(systemSoundIDFruitTap)
                         }
                     }
                     
@@ -71,7 +72,7 @@ struct GameView : View{
                         isGameOver = game.checkValueEnteredByUser(userValue: userSelectedFruit)
                     }
                     clearButton()
-                    AudioServicesPlaySystemSound(1106)
+                    AudioServicesPlaySystemSound(systemSoundIDButtonTap)
                 }) {
                     Text("Valider !")
                         .font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title))
