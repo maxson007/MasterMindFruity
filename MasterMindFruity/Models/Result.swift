@@ -8,8 +8,14 @@
 import Foundation
 import SwiftUI
 
-class Result: Identifiable{
+class Result: Identifiable, Hashable{
+    
+    static func == (lhs: Result, rhs: Result) -> Bool {
+        return lhs.id==rhs.id
+    }
+    
     var id : Int
+    var ID = UUID()
     var resultPlaced : [Color]
     var userSecretCode: [Int]
     
@@ -18,4 +24,8 @@ class Result: Identifiable{
         self.resultPlaced=resultPlaced
         self.userSecretCode=userSecretCode
     }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.ID)
+     }
 }

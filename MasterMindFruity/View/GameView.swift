@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-
+import AudioToolbox
+import AVFoundation
 
 struct GameView : View{
     @Environment(\.presentationMode) var presentationMode
@@ -18,6 +19,10 @@ struct GameView : View{
     @State var userSelectedFruit:[Int]=[]
     @State var isGameOver:Bool = false
     @State var userSelectedFruitIsDuplicate: Bool = false
+    let systemSoundIDFruitTap: SystemSoundID = 1104
+    let systemSoundIDButtonTap: SystemSoundID = 1105
+
+
     var body: some View{
         if !isGameOver{
             VStack {
@@ -29,20 +34,33 @@ struct GameView : View{
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
-                List{
-                    ForEach(game.history) { value in
-                        ResultRowView(result: value, basket: basket)
+                ScrollView(.vertical) {
+                    ScrollViewReader { scrollView in
+                        LazyVStack {
+                            ForEach(game.history) { value in
+                                
+                                ZStack {
+                                    ResultRowView(result: value, basket: basket).id(game.history.count)
+                                    
+                                }
+                                Divider()
+                            }
+                        }.onChange(of: game.history, perform: { value in
+                            withAnimation(.spring()){
+                                scrollView.scrollTo(game.history.count)
+                            }
+                        
+                        })
                     }
-                    
                 }.rotationEffect(.radians(.pi))
-                .scaleEffect(x: -1, y: 1, anchor: .center)
+                .scaleEffect(x: -1, y: 1, anchor: .bottom)
                 Spacer()
                 Divider()
                 HStack {
                     ForEach(self.basket.fruits, id: \.id) { fruit in
                         FruitView(fruit: fruit,  selectedFruits: $userSelectedFruit).onTapGesture {
                             selectFruitToggle(fruit: fruit)
-                            
+                            AudioServicesPlaySystemSound(systemSoundIDFruitTap)
                         }
                     }
                     
@@ -54,7 +72,7 @@ struct GameView : View{
                         isGameOver = game.checkValueEnteredByUser(userValue: userSelectedFruit)
                     }
                     clearButton()
-                    
+                    AudioServicesPlaySystemSound(systemSoundIDButtonTap)
                 }) {
                     Text("Valider !")
                         .font(Font.custom("Juicy Fruity", size: 15, relativeTo: .title))
