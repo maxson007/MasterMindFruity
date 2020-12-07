@@ -21,8 +21,8 @@ struct GameView : View{
     @State var userSelectedFruitIsDuplicate: Bool = false
     let systemSoundIDFruitTap: SystemSoundID = 1104
     let systemSoundIDButtonTap: SystemSoundID = 1105
-
-
+    
+    
     var body: some View{
         if !isGameOver{
             VStack {
@@ -34,20 +34,21 @@ struct GameView : View{
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
-                ZStack {
-                    HStack {
-                        ForEach(userSelectedFruit, id: \.self) { idFruit in
-                            Image(basket.fruits[idFruit-1].name).resizable().aspectRatio(contentMode: .fit).frame(width: 20.0)
-                            }
+                /* Affichage de la selection de fruit en live */
+                HStack {
+                    ForEach(userSelectedFruit, id: \.self) { idFruit in
+                        Image(basket.fruits[idFruit-1].name).resizable().aspectRatio(contentMode: .fit).frame(width: 25.0)
                     }
-                }.animation(.easeOut).padding()
+                }.animation(.easeOut)
+                Spacer()
+                /* History de proposotion */
                 ScrollView(.vertical) {
                     ScrollViewReader { scrollView in
                         LazyVStack {
                             ForEach(game.history) { value in
                                 
                                 ZStack {
-                                    ResultRowView(result: value, basket: basket).id(game.history.count)
+                                    ResultRowView(result: value, basket: basket).id(game.history.count+1)
                                     
                                 }
                                 Divider()
@@ -56,12 +57,13 @@ struct GameView : View{
                             withAnimation(.spring()){
                                 scrollView.scrollTo(game.history.count)
                             }
-                        
+                            
                         })
                     }
                 }.rotationEffect(.radians(.pi))
                 .scaleEffect(x: -1, y: 1, anchor: .bottom)
                 Spacer()
+                /* Panier de fruit à selectionner */
                 Divider()
                 HStack {
                     ForEach(self.basket.fruits, id: \.id) { fruit in
@@ -72,7 +74,7 @@ struct GameView : View{
                     }
                     
                 }.padding(10)
-                
+                /* Bouton de validation de la proposion*/
                 Button(action: {
                     userSelectedFruitIsDuplicate=game.isDuplicate(userValue: userSelectedFruit)
                     if !userSelectedFruitIsDuplicate{
@@ -91,11 +93,12 @@ struct GameView : View{
             }.navigationBarBackButtonHidden(true).onAppear(
                 perform: {self.game.start()}
             ).alert(isPresented: $userSelectedFruitIsDuplicate, content: {
-                        
+                        /* Alert doublon*/
                         Alert(title: Text("👮🏾‍♀️ Attention !!! 🤪"),
                               message: Text("Vous avez déjà composé cette combinaison")
                         )})
         }else{
+            /* View Game Over*/
             GameOverView(title: game.alertTitle, message: game.alertMessage, isGameOver: $isGameOver, secretCode: game.secretCode, isPlayerSuccess: game.isSuccess, onPressNewParty: {
                 print("press nouvelle partie")
                 game.start()
@@ -116,6 +119,7 @@ struct GameView : View{
         return userSelectedFruit.count == game.secretCodeLength
     }
     
+    /* Selection de fruit */
     private func selectFruitToggle(fruit: Fruit){
         
         if !fruit.isSelected {

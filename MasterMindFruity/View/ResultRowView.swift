@@ -19,7 +19,7 @@ struct ResultRowView: View {
             ForEach(result.userSecretCode, id: \.self) { idFruit in
                 HStack {
                     Image(basket.fruits[idFruit-1].name).resizable().aspectRatio(contentMode: .fit).rotationEffect(.radians(.pi))
-                        .scaleEffect(x: -1, y: 1, anchor: .center)
+                        .scaleEffect(x: -1, y: 1, anchor: .center).frame(width: 55)
                 }
                 
             }
