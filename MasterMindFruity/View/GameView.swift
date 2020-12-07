@@ -25,12 +25,13 @@ struct GameView : View{
     
     var body: some View{
         if !isGameOver{
+            /* Score et le buton exit*/
             VStack {
                 HStack {
                     Text("Player: \(game.score.player) vs System: \(game.score.system) ").foregroundColor(.green).padding()
                     Spacer()
                     
-                    Text("Exit").font(Font.custom("Juicy Fruity", size: 12, relativeTo: .title)).foregroundColor(.green).padding().onTapGesture {
+                    Text("Exit▶︎").font(Font.custom("Juicy Fruity", size: 12, relativeTo: .title)).foregroundColor(.green).padding().onTapGesture {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
