@@ -12,7 +12,7 @@ import AVFoundation
 struct GameView : View{
     @Environment(\.presentationMode) var presentationMode
     
-    @State var game = Game()
+    @ObservedObject var game = Game()
     
     @ObservedObject var basket: FruitBasket = FruitBasket()
     
@@ -34,6 +34,13 @@ struct GameView : View{
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
+                ZStack {
+                    HStack {
+                        ForEach(userSelectedFruit, id: \.self) { idFruit in
+                            Image(basket.fruits[idFruit-1].name).resizable().aspectRatio(contentMode: .fit).frame(width: 20.0)
+                            }
+                    }
+                }.animation(.easeOut).padding()
                 ScrollView(.vertical) {
                     ScrollViewReader { scrollView in
                         LazyVStack {
@@ -113,12 +120,12 @@ struct GameView : View{
         
         if !fruit.isSelected {
             userSelectedFruit.append(fruit.id)
-            fruit.isSelected.toggle()
+            fruit.isSelected=true
         }else{
             userSelectedFruit.removeAll(where: {
                 $0 == fruit.id
             })
-            fruit.isSelected.toggle()
+            fruit.isSelected=false
         }
     }
     

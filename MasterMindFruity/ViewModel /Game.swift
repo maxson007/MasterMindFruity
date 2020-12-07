@@ -157,12 +157,22 @@ class Game: ObservableObject {
     public func isDuplicate(userValue: [Int])->Bool{
         
         for result in history {
-            if(result.userSecretCode.elementsEqual(userValue)){
+            if(result.userSecretCode.elementsEqual(userValue) && result.id != 99){
                 return true
             }
         }
         
         return false
+    }
+    
+    public func addTemporaryResult(userSecretCode: [Int]){
+
+        self.history.removeAll(where: { $0.id == 99} )
+        if userSecretCode.count < self.secretCodeLength{
+            
+        }
+        history.append(Result(id: 99, resultPlaced: resultPlaced, userSecretCode: userSecretCode))
+        print(history.first?.userSecretCode ?? [])
     }
 }
 
